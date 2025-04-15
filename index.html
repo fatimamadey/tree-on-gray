@@ -8,7 +8,9 @@
     const gif = await nn.loadImage(GIF) // async function, 
     // add await, must be in func labeled async, means function has code that it needs to wait for
     nn.create('img')
-      .set({src: GIF})
+      .set({
+        src: `$GIF#${Math.random()}`
+      }) // adding #random makes it refresh
       .css({
         position: 'absolute',
         left: x - gif.width / 2,
@@ -29,7 +31,7 @@
     const numCols = nn.width / colSize
     
     const rowSize = gif.height / 2
-    const numRows = nn.height / rowSize
+    const numRows = nn.height * 0.75 / rowSize
     
     for (let r = 0; r < numRows; r++) {
       for (let c = 0; c < numCols; c++) {
@@ -41,5 +43,6 @@
   }
   
   nn.on('load', setup)
+  // location.reload() // refreshes the page
   
 </script>
