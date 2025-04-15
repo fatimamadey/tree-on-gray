@@ -32,7 +32,7 @@
     const numRows = nn.height / rowSize
     
     for (let r = 0; r < numRows; r++) {
-      for (let c = 1; c < numCols; c++) {
+      for (let c = 0; c < numCols; c++) {
         const x = c * colSize
         const y = r * rowSize
         createGif(x, y)
