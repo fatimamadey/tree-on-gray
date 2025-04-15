@@ -1,23 +1,45 @@
-<!DOCTYPE html>
-<style>
-  /* netnet default bg */
-  body {
-    margin: 0;
-    background-image: linear-gradient(#515199a8 2px, transparent 1px),
-      linear-gradient(90deg, #515199a8 2px, transparent 1px);
-    background-size: 50px 50px;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
+<script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<script>
+/*global nn*/
+  const GIF = 't8.gif'
+  const COLOR = 'gray'
+  
+  async function createGif(x, y) {
+    const gif = await nn.loadImage(GIF) // async function, 
+    // add await, must be in func labeled async, means function has code that it needs to wait for
+    nn.create('img')
+      .set({src: GIF})
+      .css({
+        position: 'absolute',
+        left: x - gif.width / 2,
+        top: y - gif.height / 2
+        // width: size,
+        // imageRendering: 'pixelated'
+      })
+      .addTo('body')
   }
-
-  body::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(0deg, #c76ebca8, #515199a8);
-  }
-</style>
+  
+  async function setup() {
+    nn.get('body').css({
+      backgroundColor: COLOR
+    })
+    const gif = await nn.loadImage(GIF)
     
+    const colSize = gif.width / 4
+    const numCols = nn.width / colSize
+    
+    const rowSize = gif.height / 2
+    const numRows = nn.height / rowSize
+    
+    for (let r = 0; r < numRows; r++) {
+      for (let c = 1; c < numCols; c++) {
+        const x = c * colSize
+        const y = r * rowSize
+        createGif(x, y)
+      }
+    }
+  }
+  
+  nn.on('load', setup)
+  
+</script>
